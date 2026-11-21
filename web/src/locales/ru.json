@@ -1104,7 +1104,7 @@
   "Community": "Сообщество",
   "Community translation, some text in English": "Перевод сообщества, часть текста на английском",
   "Compact": "Компактно",
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": "Компактный вид уплотняет строки, заголовки и боковую панель; области нажатия остаются полного размера.",
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": "Компактный вид уплотняет строки и боковую панель; просторный показывает задачи крупными карточками.",
   "Compare the samples in daylight and in the evening before ordering.": "Сравните образцы при дневном свете и вечером, прежде чем заказывать.",
   "Comparison": "Сравнение",
   "Compatible endpoint": "Совместимая конечная точка",
@@ -7864,5 +7864,6 @@
   "They leave the sidebar with their sub-projects. You can unarchive them from Settings → Data.": "Они исчезнут с боковой панели вместе со своими подпроектами. Вернуть их из архива можно в Настройки → Данные.",
   "Archived {projects}": "В архиве: {projects}",
   "The filter language of saved views, for example search: milk & p1 or @errand.": "Язык фильтров сохранённых представлений, например search: milk & p1 или @errand.",
-  "Filter {name}": "Фильтр «{name}»"
+  "Filter {name}": "Фильтр «{name}»",
+  "Roomy": "Просторный"
 }

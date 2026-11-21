@@ -27,6 +27,7 @@ afterEach(() => { root().removeAttribute('data-density') })
 describe('preference', () => {
   it('reads compact, treats an unknown value as comfortable and leaves the stored value alone', async () => {
     expect(readAppearance({ density: 'compact' } as never).density).toBe('compact')
+    expect(readAppearance({ density: 'roomy' } as never).density).toBe('roomy')
     expect(readAppearance({ density: 'cosy' } as never).density).toBe('comfortable')
     expect(readAppearance(null).density).toBe('comfortable')
     await applyOps([{ id: 'd1', entity: 'user_prefs', entityId: 'me', field: 'density', value: 'cosy', ts: Date.now(), device: 'phone' }] as never)
@@ -39,8 +40,25 @@ describe('preference', () => {
     expect((await db.outbox.toArray()).map((o) => `${o.field}=${o.value}`)).toEqual(['density=compact'])
     applyAppearance({ mode: 'system', accent: 'emerald', density: 'compact' })
     expect(root().getAttribute('data-density')).toBe('compact')
+    applyAppearance({ mode: 'system', accent: 'emerald', density: 'roomy' })
+    expect(root().getAttribute('data-density')).toBe('roomy')
     applyAppearance({ mode: 'system', accent: 'emerald', density: 'comfortable' })
     expect(root().hasAttribute('data-density')).toBe(false)
+  })
+
+  it('the stylesheet draws roomy rows as cards with a larger title and check (roomy-density D1, D2)', () => {
+    // The fill has zero specificity so hover, selected and ticked paint over it, and steps from what the list sits on.
+    expect(css).toMatch(/:where\(:root\[data-density="roomy"\] \.row-pad\) \{ background-color: var\(--ot-raised\); \}/)
+    expect(css).toMatch(/@media screen and \(width < 48rem\) \{ :where\(:root\[data-density="roomy"\] \.row-pad\) \{ background-color: var\(--ot-surface\); \} \}/)
+    expect(css).toMatch(/:root\[data-density="roomy"\] \.row-pad \{ padding-block: 0\.75rem; padding-inline: 0\.75rem; margin-block-end: 0\.25rem; border-radius: var\(--radius-surface\); \}/)
+    expect(css).toMatch(/:root\[data-density="roomy"\] \.row-pad \[data-check-mark\] \{ width: 1\.5rem; height: 1\.5rem;/)
+    expect(css).toMatch(/:root\[data-density="roomy"\] \.row-pad > \[data-row-open\] \{ min-height: 3\.5rem;/) // 56 px on a phone
+    expect(css).toMatch(/font-size: max\(1\.0625rem, calc\(var\(--ot-text-list\) \+ 0\.125rem\)\)/) // at least 17 px on a phone
+    // Fewer marks (D4): no grip on touch, and no empty fold slot in a list without subtasks.
+    expect(css).toMatch(/@media \(pointer: coarse\) \{ :root\[data-density="roomy"\] \.row-pad > \[data-row-grip\] \{ display: none; \} \}/)
+    expect(css).toMatch(/:root\[data-density="roomy"\] :is\(ul, ol, \[role="tree"\]\):not\(:has\(\[data-leading-slot\] > button\)\) \.row-pad > \[data-leading-slot\] \{ display: none; \}/)
+    // The shape rules come after the phone row, so they outrank it.
+    expect(css.indexOf(':root[data-density="roomy"] .row-pad [data-row-title]')).toBeGreaterThan(css.indexOf('[data-row-title] { font-size: calc(var(--ot-text-list) + 0.09375rem); }'))
   })
 
   it('the stylesheet tightens rows under compact and keeps touch targets on coarse pointers', () => {
@@ -68,6 +86,9 @@ describe('Appearance → Density', () => {
     await applyOps([{ id: 'd2', entity: 'user_prefs', entityId: 'me', field: 'density', value: 'comfortable', ts: Date.now() + 1000, device: 'tablet' }] as never)
     await waitFor(() => !root().hasAttribute('data-density'), 'the synced density applied')
     expect(option('Comfortable').getAttribute('aria-checked')).toBe('true')
+    await click(option('Roomy'))
+    await waitFor(() => root().getAttribute('data-density') === 'roomy', 'Roomy applied')
+    expect([...document.querySelectorAll('[data-testid="appearance-density"] [role="radio"]')].map((b) => b.textContent)).toEqual(['Compact', 'Comfortable', 'Roomy'])
     await r.unmount()
   })
 })

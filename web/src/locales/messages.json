@@ -607,8 +607,7 @@
     "web/src/lib/slots.ts"
   ],
   "A small ring marks a day with calendar events.": [
-    "web/src/app/QuarterView.tsx",
-    "web/src/app/YearView.tsx"
+    "web/src/app/calendar/MonthsSpanView.tsx"
   ],
   "A source that no longer exists": [
     "web/src/app/calendar/FramesDialog.tsx"
@@ -2119,8 +2118,7 @@
     "web/src/app/PlanView.tsx"
   ],
   "Arrows move the focused day, {pgup} / {pgdn} a month, {open} opens it in Day. Marks count open tasks, repeating occurrences while shown and every day of a multi-day task.": [
-    "web/src/app/QuarterView.tsx",
-    "web/src/app/YearView.tsx"
+    "web/src/app/calendar/MonthsSpanView.tsx"
   ],
   "As a page": [
     "web/src/app/AppearanceSection.tsx"
@@ -3832,7 +3830,7 @@
   "Compact": [
     "web/src/app/AppearanceSection.tsx"
   ],
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": [
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": [
     "web/src/lib/settingsCopy.ts"
   ],
   "Compare the samples in daylight and in the evening before ordering.": [
@@ -6228,8 +6226,7 @@
   ],
   "Event": [
     "web/src/app/AuditPanel.tsx",
-    "web/src/app/CalendarEvents.tsx",
-    "web/src/app/calendar/TodayAgenda.tsx"
+    "web/src/app/CalendarEvents.tsx"
   ],
   "Events": [
     "web/src/app/CaldavPanel.tsx",
@@ -7535,9 +7532,8 @@
   ],
   "Go to sign-in": [
     "web/src/app/EmailScreens.tsx",
-    "web/src/app/InviteScreen.tsx",
-    "web/src/app/ProjectInviteScreen.tsx",
-    "web/src/app/ResetScreen.tsx"
+    "web/src/app/LinkCard.tsx",
+    "web/src/app/ProjectInviteScreen.tsx"
   ],
   "Go to the Assistant page: the conversation and its skills (when the assistant is on)": [
     "web/src/lib/shortcuts.ts"
@@ -10976,7 +10972,7 @@
     "web/src/lib/sectorNames.ts"
   ],
   "Next quarter": [
-    "web/src/app/QuarterView.tsx",
+    "web/src/app/calendar/MonthsSpanView.tsx",
     "web/src/lib/sectorNames.ts"
   ],
   "Next run:": [
@@ -11008,7 +11004,7 @@
     "web/src/lib/sectorNames.ts"
   ],
   "Next year": [
-    "web/src/app/YearView.tsx"
+    "web/src/app/calendar/MonthsSpanView.tsx"
   ],
   "Next {n} days": [
     "web/src/app/PlanView.tsx"
@@ -12577,10 +12573,8 @@
   ],
   "One moment.": [
     "web/src/app/EmailScreens.tsx",
-    "web/src/app/InviteScreen.tsx",
+    "web/src/app/LinkCard.tsx",
     "web/src/app/ProjectInviteScreen.tsx",
-    "web/src/app/ResetScreen.tsx",
-    "web/src/app/WorkspaceInviteScreen.tsx",
     "web/src/page/RoutineEmailStopScreen.tsx"
   ],
   "One next step|method": [
@@ -13839,7 +13833,7 @@
     "web/src/app/review/ProjectWalk.tsx"
   ],
   "Previous quarter": [
-    "web/src/app/QuarterView.tsx"
+    "web/src/app/calendar/MonthsSpanView.tsx"
   ],
   "Previous task": [
     "web/src/app/task-detail/TaskPageView.tsx"
@@ -13849,7 +13843,7 @@
     "web/src/app/PlanView.tsx"
   ],
   "Previous year": [
-    "web/src/app/YearView.tsx"
+    "web/src/app/calendar/MonthsSpanView.tsx"
   ],
   "Primary": [
     "web/src/app/Sidebar.tsx"
@@ -14394,8 +14388,7 @@
     "web/src/app/CalendarView.tsx",
     "web/src/app/MonthView.tsx",
     "web/src/app/PlanView.tsx",
-    "web/src/app/QuarterView.tsx",
-    "web/src/app/YearView.tsx"
+    "web/src/app/calendar/MonthsSpanView.tsx"
   ],
   "Re-enable": [
     "web/src/app/NotificationsSettings.tsx"
@@ -15188,17 +15181,11 @@
   "Retry": [
     "web/src/app/App.tsx",
     "web/src/app/EmailScreens.tsx",
-    "web/src/app/InviteScreen.tsx",
-    "web/src/app/ProjectInviteScreen.tsx",
-    "web/src/app/ResetScreen.tsx",
-    "web/src/app/WorkspaceInviteScreen.tsx"
+    "web/src/app/LinkCard.tsx"
   ],
   "Retry now": [
     "web/src/app/EmailScreens.tsx",
-    "web/src/app/InviteScreen.tsx",
-    "web/src/app/ProjectInviteScreen.tsx",
-    "web/src/app/ResetScreen.tsx",
-    "web/src/app/WorkspaceInviteScreen.tsx"
+    "web/src/app/LinkCard.tsx"
   ],
   "Reusable list": [
     "web/src/app/menus/ListModeStep.tsx",
@@ -15357,6 +15344,9 @@
     "web/src/app/ShareDialog.tsx",
     "web/src/app/ShareDirectory.tsx",
     "web/src/app/WorkspaceMembers.tsx"
+  ],
+  "Roomy": [
+    "web/src/app/AppearanceSection.tsx"
   ],
   "Rose": [
     "web/src/lib/colourNames.ts"
@@ -17099,10 +17089,7 @@
   ],
   "Something went wrong": [
     "web/src/app/EmailScreens.tsx",
-    "web/src/app/InviteScreen.tsx",
-    "web/src/app/ProjectInviteScreen.tsx",
-    "web/src/app/ResetScreen.tsx",
-    "web/src/app/WorkspaceInviteScreen.tsx"
+    "web/src/app/LinkCard.tsx"
   ],
   "Something went wrong in the app.": [
     "web/src/app/ErrorBoundary.tsx"
@@ -20255,7 +20242,6 @@
     "web/src/app/ParseChips.tsx",
     "web/src/app/PlanView.tsx",
     "web/src/app/PreferencesPanels.tsx",
-    "web/src/app/QuarterView.tsx",
     "web/src/app/RuleEditor.tsx",
     "web/src/app/Sidebar.tsx",
     "web/src/app/TabBar.tsx",
@@ -20263,12 +20249,12 @@
     "web/src/app/TimelineView.tsx",
     "web/src/app/TriageView.tsx",
     "web/src/app/WorkspaceActivity.tsx",
-    "web/src/app/YearView.tsx",
     "web/src/app/assistant/AssistantPanel.tsx",
     "web/src/app/assistant/blocks/StatsBlock.tsx",
     "web/src/app/assistant/blocks/TimelineBlock.tsx",
     "web/src/app/auditFormat.ts",
     "web/src/app/bulk/BulkActions.tsx",
+    "web/src/app/calendar/MonthsSpanView.tsx",
     "web/src/app/display/DisplayScreen.tsx",
     "web/src/app/filter/ConditionEditor.tsx",
     "web/src/app/focus/FocusPicker.tsx",
@@ -20394,9 +20380,7 @@
   ],
   "Too many attempts": [
     "web/src/app/EmailScreens.tsx",
-    "web/src/app/InviteScreen.tsx",
-    "web/src/app/ProjectInviteScreen.tsx",
-    "web/src/app/ResetScreen.tsx"
+    "web/src/app/LinkCard.tsx"
   ],
   "Too many attempts. Try again in {n, plural, one {# second} other {# seconds}}.": [
     "web/src/lib/e2ee.ts"
@@ -21512,9 +21496,7 @@
   ],
   "Wait a minute, then try again.": [
     "web/src/app/EmailScreens.tsx",
-    "web/src/app/InviteScreen.tsx",
-    "web/src/app/ProjectInviteScreen.tsx",
-    "web/src/app/ResetScreen.tsx"
+    "web/src/app/LinkCard.tsx"
   ],
   "Waiting": [
     "web/src/app/AppearanceSection.tsx",
@@ -22238,10 +22220,7 @@
   ],
   "You seem to be offline": [
     "web/src/app/EmailScreens.tsx",
-    "web/src/app/InviteScreen.tsx",
-    "web/src/app/ProjectInviteScreen.tsx",
-    "web/src/app/ResetScreen.tsx",
-    "web/src/app/WorkspaceInviteScreen.tsx"
+    "web/src/app/LinkCard.tsx"
   ],
   "You sign in with it. A new address applies at once.": [
     "web/src/lib/settingsCopy.ts"
@@ -25370,8 +25349,7 @@
     "web/src/lib/facets.ts"
   ],
   "{n, plural, one {# day with events} other {# days with events}}": [
-    "web/src/app/QuarterView.tsx",
-    "web/src/app/YearView.tsx"
+    "web/src/app/calendar/MonthsSpanView.tsx"
   ],
   "{n, plural, one {# day} other {# days}}": [
     "web/src/app/ProjectsTable.tsx",
@@ -25717,12 +25695,11 @@
   "{n, plural, one {# task} other {# tasks}}": [
     "web/src/app/ClosedListSettings.tsx",
     "web/src/app/PlanView.tsx",
-    "web/src/app/QuarterView.tsx",
     "web/src/app/TemplateDialogs.tsx",
-    "web/src/app/YearView.tsx",
     "web/src/app/bulk/BulkActions.tsx",
     "web/src/app/calendar/MonthDensityCells.tsx",
     "web/src/app/calendar/MonthWeek.tsx",
+    "web/src/app/calendar/MonthsSpanView.tsx",
     "web/src/app/palette/filterEntries.ts",
     "web/src/app/palette/registry.ts",
     "web/src/app/task-list/EarlierActions.tsx",

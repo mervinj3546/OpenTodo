@@ -1022,7 +1022,7 @@
   "Community": "社区",
   "Community translation, some text in English": "社区翻译，部分文字为英文",
   "Compact": "紧凑",
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": "紧凑模式会收紧行、标题与侧边栏；触控目标仍保持原尺寸。",
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": "紧凑模式会收紧行与侧边栏；宽松模式将每个任务显示为更大的卡片。",
   "Compare the samples in daylight and in the evening before ordering.": "下单前在日光和夜间对比样品。",
   "Comparison": "比较",
   "Compatible endpoint": "兼容端点",
@@ -7864,5 +7864,6 @@
   "They leave the sidebar with their sub-projects. You can unarchive them from Settings → Data.": "它们将连同子项目一起从侧边栏移出。你可以在“设置 → 数据”中取消归档。",
   "Archived {projects}": "已归档{projects}",
   "The filter language of saved views, for example search: milk & p1 or @errand.": "已保存视图的筛选语法，例如 search: milk & p1 或 @errand。",
-  "Filter {name}": "筛选“{name}”"
+  "Filter {name}": "筛选“{name}”",
+  "Roomy": "宽松"
 }

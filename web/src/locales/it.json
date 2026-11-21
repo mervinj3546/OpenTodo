@@ -1097,7 +1097,7 @@
   "Community": "Community",
   "Community translation, some text in English": "Traduzione della comunità, alcuni testi in inglese",
   "Compact": "Compatto",
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": "Compatto stringe righe, intestazioni e barra laterale; le aree touch restano a grandezza piena.",
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": "Compatto stringe righe e barra laterale; Ampio mostra ogni attività come una scheda più grande.",
   "Compare the samples in daylight and in the evening before ordering.": "Confrontare i campioni alla luce del giorno e di sera prima di ordinare.",
   "Comparison": "Confronto",
   "Compatible endpoint": "Endpoint compatibile",
@@ -7864,5 +7864,6 @@
   "They leave the sidebar with their sub-projects. You can unarchive them from Settings → Data.": "Lasciano la barra laterale con i loro sottoprogetti. Puoi estrarli dall’archivio da Impostazioni → Dati.",
   "Archived {projects}": "Archiviato: {projects}",
   "The filter language of saved views, for example search: milk & p1 or @errand.": "Il linguaggio dei filtri delle viste salvate, per esempio search: milk & p1 o @errand.",
-  "Filter {name}": "Filtra «{name}»"
+  "Filter {name}": "Filtra «{name}»",
+  "Roomy": "Ampio"
 }

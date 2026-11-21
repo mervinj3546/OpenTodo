@@ -1106,7 +1106,7 @@
   "Community": "Topluluk",
   "Community translation, some text in English": "Topluluk çevirisi, bazı metinler İngilizce",
   "Compact": "Kompakt",
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": "Kompakt görünüm satırları, başlıkları ve kenar çubuğunu sıkılaştırır; dokunma alanları tam boyutta kalır.",
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": "Kompakt satırları ve kenar çubuğunu sıkılaştırır; Ferah her görevi daha büyük bir kart yapar.",
   "Compare the samples in daylight and in the evening before ordering.": "Sipariş vermeden önce örnekleri gün ışığında ve akşam karşılaştırın.",
   "Comparison": "Karşılaştırma",
   "Compatible endpoint": "Uyumlu uç nokta",
@@ -7864,5 +7864,6 @@
   "They leave the sidebar with their sub-projects. You can unarchive them from Settings → Data.": "Alt projeleriyle birlikte kenar çubuğundan ayrılırlar. Ayarlar → Veri bölümünden arşivden çıkarabilirsiniz.",
   "Archived {projects}": "{projects} arşivlendi",
   "The filter language of saved views, for example search: milk & p1 or @errand.": "Kayıtlı görünümlerin filtre dili, örneğin search: milk & p1 veya @errand.",
-  "Filter {name}": "“{name}” filtrele"
+  "Filter {name}": "“{name}” filtrele",
+  "Roomy": "Ferah"
 }

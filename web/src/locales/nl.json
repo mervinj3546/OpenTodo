@@ -1036,7 +1036,7 @@
   "Communication|icon category": "Communicatie",
   "Community": "Community",
   "Compact": "Compact",
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": "Compact maakt rijen, koppen en de zijbalk compacter; aanrakingsdoelen blijven even groot.",
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": "Compact maakt rijen en de zijbalk compacter; Ruim toont elke taak als een grotere kaart.",
   "Compare the samples in daylight and in the evening before ordering.": "Vergelijk de stalen overdag en ’s avonds voordat je bestelt.",
   "Comparison": "Vergelijking",
   "Compatible endpoint": "Compatibele eindpunt",
@@ -7864,5 +7864,6 @@
   "They leave the sidebar with their sub-projects. You can unarchive them from Settings → Data.": "Ze verdwijnen met hun subprojecten uit de zijbalk. Je kunt ze terughalen uit het archief via Instellingen → Gegevens.",
   "Archived {projects}": "{projects} gearchiveerd",
   "The filter language of saved views, for example search: milk & p1 or @errand.": "De filtertaal van opgeslagen weergaven, bijvoorbeeld search: milk & p1 of @errand.",
-  "Filter {name}": "“{name}” filteren"
+  "Filter {name}": "“{name}” filteren",
+  "Roomy": "Ruim"
 }

@@ -197,7 +197,7 @@ export const SETTINGS_COPY = {
       mode: { label: msg('Mode'), description: msg("System follows your device's light or dark setting.") },
       themes: { label: msg('Theme') },
       theme: { label: msg('Accent') },
-      density: { label: msg('Density'), description: msg('Compact tightens rows, headers and the sidebar; touch targets stay full size.') },
+      density: { label: msg('Density'), description: msg('Compact tightens rows and the sidebar; Roomy draws each task as a larger card.') },
       rows: { label: msg('Task rows'), description: msg('Detailed adds the parent task and a line of dates, priority and labels.') },
       titles: { label: msg('Show full task titles'), description: msg('Long titles wrap in lists, boards and Today instead of ending with an ellipsis.') },
       haptics: { label: msg('Haptic feedback'), description: msg('A short vibration when you complete a task or pick one up with a long press.') },

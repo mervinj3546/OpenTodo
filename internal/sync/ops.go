@@ -723,8 +723,8 @@ var Schema = map[string]map[string]Field{
 		// comma-separated list of view ids shown among the primary items; unknown
 		// entries are ignored by clients.
 		"sidebar_destinations": {Kind: kString, Default: `""`},
-		// Row density (ux-overhaul, design D8): "comfortable" or "compact"; an
-		// unknown or empty value reads as comfortable.
+		// Row density (ux-overhaul, design D8; roomy-density D3): "comfortable",
+		// "compact" or "roomy"; an unknown or empty value reads as comfortable.
 		"density": {Kind: kString, Default: `""`},
 		// Row detail (OpenSpec change calm-rows, design D1): "calm" or
 		// "detailed"; an unknown or empty value reads as calm.

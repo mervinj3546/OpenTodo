@@ -1097,7 +1097,7 @@
   "Community": "Community",
   "Community translation, some text in English": "Community-Übersetzung, manche Texte auf Englisch",
   "Compact": "Kompakt",
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": "Kompakt rückt Zeilen, Überschriften und Seitenleiste enger; Touch-Ziele bleiben voll groß.",
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": "Kompakt rückt Zeilen und Seitenleiste enger; Großzügig zeigt jede Aufgabe als größere Karte.",
   "Compare the samples in daylight and in the evening before ordering.": "Die Muster bei Tageslicht und am Abend vergleichen, bevor bestellt wird.",
   "Comparison": "Vergleich",
   "Compatible endpoint": "Kompatibler Endpunkt",
@@ -7864,5 +7864,6 @@
   "They leave the sidebar with their sub-projects. You can unarchive them from Settings → Data.": "Sie verschwinden mit ihren Unterprojekten aus der Seitenleiste. Du kannst sie unter Einstellungen → Daten aus dem Archiv holen.",
   "Archived {projects}": "{projects} archiviert",
   "The filter language of saved views, for example search: milk & p1 or @errand.": "Die Filtersprache der gespeicherten Ansichten, zum Beispiel search: milk & p1 oder @errand.",
-  "Filter {name}": "„{name}“ filtern"
+  "Filter {name}": "„{name}“ filtern",
+  "Roomy": "Großzügig"
 }
