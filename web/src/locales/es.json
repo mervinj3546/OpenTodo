@@ -1095,7 +1095,7 @@
   "Community": "Comunidad",
   "Community translation, some text in English": "Traducción de la comunidad, algunos textos en inglés",
   "Compact": "Compacto",
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": "Compacto ajusta filas, encabezados y la barra lateral; las zonas táctiles mantienen su tamaño.",
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": "Compacto ajusta filas y barra lateral; Amplio muestra cada tarea como una tarjeta más grande.",
   "Compare the samples in daylight and in the evening before ordering.": "Comparar las muestras con luz de día y por la noche antes de pedir.",
   "Comparison": "Comparación",
   "Compatible endpoint": "Endpoint compatible",
@@ -7863,5 +7863,6 @@
   "{name} assigned you a task": "{name} te asignó una tarea",
   "{name} completed a task": "{name} completó una tarea",
   "{name} reopened a task": "{name} reabrió una tarea",
-  "Completed or reopened": "Completada o reabierta"
+  "Completed or reopened": "Completada o reabierta",
+  "Roomy": "Amplio"
 }

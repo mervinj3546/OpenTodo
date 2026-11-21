@@ -1,0 +1,16 @@
+## 1. Preference
+
+- [ ] 1.1 `DENSITIES` lists compact, comfortable, roomy; `readAppearance` accepts roomy; `applyAppearance` sets `data-density="roomy"` (verify: `npx vitest run src/app/density.test.tsx src/lib/appearance.test.ts`)
+- [ ] 1.2 Settings → Appearance shows **Compact · Comfortable · Roomy** and writes one `density` op (verify: density.test.tsx)
+- [ ] 1.3 The Go schema comment names the third value (verify: `go vet ./internal/sync`, or CI where Go is not installed)
+
+## 2. Presentation
+
+- [ ] 2.1 Roomy card, sizes and the phone row in `index.css` (verify: density.test.tsx stylesheet assertions; `Screens/Phone/Shopping list, roomy` in the workbench, both themes)
+- [ ] 2.2 Contrast and tone lints still pass (verify: `npx vitest run src/ui/tokens`)
+
+## 3. Docs and release
+
+- [ ] 3.1 Settings copy, the Appearance docs and the translations name Roomy (verify: `make i18n-check`, `make docs-check`)
+- [ ] 3.2 Changelog fragment `changelog.d/Added/roomy-density.md` (verify: `make news-check`)
+- [ ] 3.3 `npm run build` and `npx openspec validate roomy-density --strict` pass

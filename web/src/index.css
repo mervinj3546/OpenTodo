@@ -1420,6 +1420,12 @@ li[data-task-id][data-touch-hold] { background-color: color-mix(in oklab, var(--
 :root[data-density="compact"] .facet-line [data-part], :root[data-density="compact"] .facet-line > span:first-child { min-height: 1.5rem; height: auto; }
 :root[data-density="compact"] [data-sidebar-item] { min-height: 2rem; padding-block: 0.25rem; }
 :root[data-density="compact"] [data-group-header] { min-height: 2rem; }
+/* Roomy (roomy-density D1): each task row is a card one step from what it sits on: the
+   raised colour on the content surface, the surface colour on a phone's canvas. Zero
+   specificity, so the hover, selected and ticked states still paint over it; the card's
+   shape and type are in the unlayered rules after the phone layout. */
+:where(:root[data-density="roomy"] .row-pad) { background-color: var(--ot-raised); }
+@media screen and (width < 48rem) { :where(:root[data-density="roomy"] .row-pad) { background-color: var(--ot-surface); } }
 @media (pointer: coarse) {
   :root[data-density="compact"] .row-pad { padding-block: 0.5rem; }
   .row-offscreen { contain-intrinsic-size: auto var(--row-estimate, 2.625rem); }
@@ -1583,6 +1589,28 @@ li[data-task-id][data-touch-hold] { background-color: color-mix(in oklab, var(--
     [data-row-cell="assignee"] [data-assignee] > :last-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   }
 }
+
+/* Roomy rows (roomy-density D1, D2): a card with the surface radius and a 4 px gap, the
+   title two steps above the list size on one 24 px line and a 24 px check. 48 px rows with
+   a fine pointer, 56 px on a phone, where the title is at least 17 px whatever the
+   theme's list size. Unlayered, so they outrank the row's own utilities and the phone row. */
+:root[data-density="roomy"] .row-pad { padding-block: 0.75rem; padding-inline: 0.75rem; margin-block-end: 0.25rem; border-radius: var(--radius-surface); }
+:root[data-density="roomy"] .row-pad [data-row-title] { font-size: calc(var(--ot-text-list) + 0.125rem); line-height: 1.5rem; }
+:root[data-density="roomy"] .row-pad [data-check-mark] { width: 1.5rem; height: 1.5rem; border-width: 1.5px; }
+:root[data-density="roomy"] .row-pad > [data-row-controls] { width: 1.5rem; height: 1.5rem; margin-top: 0; }
+@media screen and (width < 48rem) {
+  :root[data-density="roomy"] .row-pad { padding-block: 0; }
+  :root[data-density="roomy"] .row-pad > [data-row-open] { min-height: 3.5rem; padding-block: 1rem; }
+  :root[data-density="roomy"] .row-pad > :is([data-leading-slot], [data-row-time], [data-row-expand], [data-row-grip]) { margin-top: 1.125rem; }
+  :root[data-density="roomy"] .row-pad > [data-row-controls] { margin-top: 1rem; }
+  :root[data-density="roomy"] .row-pad [data-row-title] { font-size: max(1.0625rem, calc(var(--ot-text-list) + 0.125rem)); }
+}
+/* Fewer marks on a roomy card (roomy-density D4): the touch grip is hidden, since a long
+   press then a move drags the row and Select tasks in the page menu starts a selection;
+   the fold arrow's slot is dropped in a list where no row has subtasks, so the check sits
+   at the card's edge, and kept wherever one row has them, so checks still line up. */
+@media (pointer: coarse) { :root[data-density="roomy"] .row-pad > [data-row-grip] { display: none; } }
+:root[data-density="roomy"] :is(ul, ol, [role="tree"]):not(:has([data-leading-slot] > button)) .row-pad > [data-leading-slot] { display: none; }
 
 /* Full task titles (OpenSpec change full-task-titles, design D2): with the setting on,
    <html> carries data-titles="full" and every row, card and Today title shows in full,

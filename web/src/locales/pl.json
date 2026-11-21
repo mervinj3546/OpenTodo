@@ -1102,7 +1102,7 @@
   "Community": "Społeczność",
   "Community translation, some text in English": "Tłumaczenie społeczności, część tekstów po angielsku",
   "Compact": "Zwarty",
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": "Tryb zwarty zagęszcza wiersze, nagłówki i pasek boczny; elementy dotykowe zachowują pełny rozmiar.",
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": "Tryb zwarty zagęszcza wiersze i pasek boczny; przestronny pokazuje zadania jako większe karty.",
   "Compare the samples in daylight and in the evening before ordering.": "Porównać próbki w świetle dziennym i wieczorem przed zamówieniem.",
   "Comparison": "Porównanie",
   "Compatible endpoint": "Zgodny punkt końcowy",
@@ -7863,5 +7863,6 @@
   "{name} assigned you a task": "{name} przypisał(a) ci zadanie",
   "{name} completed a task": "{name} ukończył(a) zadanie",
   "{name} reopened a task": "{name} ponownie otworzył(a) zadanie",
-  "Completed or reopened": "Ukończone lub ponownie otwarte"
+  "Completed or reopened": "Ukończone lub ponownie otwarte",
+  "Roomy": "Przestronny"
 }

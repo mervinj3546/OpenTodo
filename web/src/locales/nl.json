@@ -1034,7 +1034,7 @@
   "Communication|icon category": "Communicatie",
   "Community": "Community",
   "Compact": "Compact",
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": "Compact maakt rijen, koppen en de zijbalk compacter; aanrakingsdoelen blijven even groot.",
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": "Compact maakt rijen en de zijbalk compacter; Ruim toont elke taak als een grotere kaart.",
   "Compare the samples in daylight and in the evening before ordering.": "Vergelijk de stalen overdag en ’s avonds voordat je bestelt.",
   "Comparison": "Vergelijking",
   "Compatible endpoint": "Compatibele eindpunt",
@@ -7863,5 +7863,6 @@
   "{name} assigned you a task": "{name} heeft je een taak toegewezen",
   "{name} completed a task": "{name} heeft een taak voltooid",
   "{name} reopened a task": "{name} heeft een taak opnieuw geopend",
-  "Completed or reopened": "Voltooid of opnieuw geopend"
+  "Completed or reopened": "Voltooid of opnieuw geopend",
+  "Roomy": "Ruim"
 }

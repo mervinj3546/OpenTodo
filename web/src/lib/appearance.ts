@@ -24,8 +24,8 @@ export const THEME_MODES: readonly ThemeModePref[] = ['system', 'light', 'dark']
 export const PROMOTABLE = ['loop', 'next', 'waiting', 'anytime', 'someday', 'assigned', 'completed', 'feed', 'trash', 'filter', 'focus', 'habits'] as const
 export type Promotable = (typeof PROMOTABLE)[number]
 
-/** Row density (appearance-preferences "Density preference"); unknown stored values read as comfortable. */
-export const DENSITIES = ['comfortable', 'compact'] as const
+/** Row density (appearance-preferences "Density preference"), in the order of the control; unknown stored values read as comfortable. */
+export const DENSITIES = ['compact', 'comfortable', 'roomy'] as const
 export type Density = (typeof DENSITIES)[number]
 
 /** A stored custom colour: lowercase `#rrggbb` (accent-colour D1). */
@@ -63,7 +63,7 @@ export function readAppearance(row: Partial<UserPrefs> | null | undefined): Appe
     mode,
     accent,
     ...(custom ? { custom } : {}),
-    density: row?.density === 'compact' ? 'compact' : 'comfortable',
+    density: (DENSITIES as readonly string[]).includes(row?.density ?? '') ? row!.density as Density : 'comfortable',
     sidebar: PROMOTABLE.filter((id) => wanted.has(id)),
   }
 }
@@ -262,9 +262,9 @@ export function applyAppearance(a: Appearance, doc: Document = document, derived
   const accent = custom ? CUSTOM_ACCENT : a.accent === CUSTOM_ACCENT ? DEFAULT_ACCENT : a.accent
   if (accent === DEFAULT_ACCENT) root.removeAttribute('data-accent')
   else root.setAttribute('data-accent', accent)
-  // Density (appearance-preferences): CSS tightens rows under data-density="compact";
-  // touch targets keep their size through the coarse-pointer rules.
-  if (a.density === 'compact') root.setAttribute('data-density', 'compact')
+  // Density (appearance-preferences): CSS tightens rows under data-density="compact" and
+  // makes each row a card under "roomy"; touch targets keep their size through the coarse-pointer rules.
+  if (a.density === 'compact' || a.density === 'roomy') root.setAttribute('data-density', a.density)
   else root.removeAttribute('data-density')
   setMeta(doc, 'color-scheme', a.mode === 'system' ? 'light dark' : a.mode)
   const side = effectiveSide(a.mode, doc)

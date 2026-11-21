@@ -44,7 +44,7 @@ const ThemeSettings = lazy(() => import('./ThemeRow'))
 import { effectiveSide } from '../lib/appearance'
 
 const MODE_LABEL = translatedMap<ThemeModePref>({ system: msg('System'), light: msg('Light'), dark: msg('Dark') })
-const DENSITY_LABEL = translatedMap<Density>({ comfortable: msg('Comfortable'), compact: msg('Compact') })
+const DENSITY_LABEL = translatedMap<Density>({ compact: msg('Compact'), comfortable: msg('Comfortable'), roomy: msg('Roomy') })
 const TASK_OPEN: readonly TaskOpenPref[] = ['page', 'panel']
 const TASK_OPEN_LABEL = translatedMap<TaskOpenPref>({ page: msg('As a page'), panel: msg('In a side panel') })
 

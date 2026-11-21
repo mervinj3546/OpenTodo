@@ -1,0 +1,1 @@
+- **Roomy density.** Settings → Appearance → Density now offers **Roomy** beside Compact and Comfortable: each task in a list becomes a card of its own with a larger title and check, 56 px tall on a phone and 48 px on a computer, without the drag handle (long-press and move to reorder). It syncs like the other densities.

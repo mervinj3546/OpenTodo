@@ -3825,7 +3825,7 @@
   "Compact": [
     "web/src/app/AppearanceSection.tsx"
   ],
-  "Compact tightens rows, headers and the sidebar; touch targets stay full size.": [
+  "Compact tightens rows and the sidebar; Roomy draws each task as a larger card.": [
     "web/src/lib/settingsCopy.ts"
   ],
   "Compare the samples in daylight and in the evening before ordering.": [
@@ -15357,6 +15357,9 @@
     "web/src/app/ShareDialog.tsx",
     "web/src/app/ShareDirectory.tsx",
     "web/src/app/WorkspaceMembers.tsx"
+  ],
+  "Roomy": [
+    "web/src/app/AppearanceSection.tsx"
   ],
   "Rose": [
     "web/src/lib/colourNames.ts"

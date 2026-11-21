@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import type { ReactNode } from 'react'
+import { type ReactNode, useLayoutEffect } from 'react'
 import { HEX, project, seeded, seedInbox, seedToday, storyUser, task, TODAY, withClock, withSeed } from './stories/fixtures'
 import { setTodayLimit } from '../lib/closedListPrefs'
-import { createTask, setTaskCompleted } from '../lib/ops'
+import { createProject, createTask, setTaskCompleted } from '../lib/ops'
 import { navigate } from './router'
 import { Shell } from './Shell'
 import { Sidebar } from './Sidebar'
@@ -107,4 +107,39 @@ export const DrawerOpenLoopsFirst: StoryObj = {
   name: 'Drawer (Open Loops first)',
   ...withSeed(async () => { await seedInbox(); await setMethodMode('first') }),
   render: () => <Drawer />,
+}
+
+/** A shopping list on a phone (roomy-density): four open tasks and the folded-open Completed group, as people keep a list they tick off in a shop. */
+async function seedShopping(): Promise<void> {
+  seeded.costco = await createProject({ name: 'Costco', color: HEX.blue })
+  for (const title of ['Oranges', 'Cashews', 'Onions', 'Quinoa']) await createTask({ title, project_id: seeded.costco })
+  for (const title of ['Nuts', 'Canned chickpeas', 'Frozen blueberries', 'Peanut butter', 'Hummus']) await setTaskCompleted(await createTask({ title, project_id: seeded.costco }), true)
+}
+
+export const ShoppingList: StoryObj = {
+  name: 'Shopping list',
+  ...withSeed(async () => {
+    await seedShopping()
+    navigate({ view: 'project', id: seeded.costco })
+  }),
+  render: () => <Viewport><Shell user={storyUser} onLogout={noop} /></Viewport>,
+}
+
+/** The workbench has no AppearanceProvider: the density is set on the root for the story and removed after it. */
+function Roomy({ children }: { children: ReactNode }) {
+  useLayoutEffect(() => {
+    document.documentElement.setAttribute('data-density', 'roomy')
+    return () => document.documentElement.removeAttribute('data-density')
+  }, [])
+  return children
+}
+
+/** The same list with the Roomy density (roomy-density D1): each row a card on the canvas, a larger title and check. */
+export const ShoppingListRoomy: StoryObj = {
+  name: 'Shopping list, roomy',
+  ...withSeed(async () => {
+    await seedShopping()
+    navigate({ view: 'project', id: seeded.costco })
+  }),
+  render: () => <Roomy><Viewport><Shell user={storyUser} onLogout={noop} /></Viewport></Roomy>,
 }
