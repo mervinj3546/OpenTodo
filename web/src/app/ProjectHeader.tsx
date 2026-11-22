@@ -1,4 +1,4 @@
-import { Button, Icon, PageHeader, ProgressRing, ReadAs, Tooltip } from '../ui'
+import { Button, DESKTOP_HEADER_QUERY, Icon, PageHeader, ProgressRing, ReadAs, Tooltip, useMediaQuery } from '../ui'
 import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { api } from '../lib/api'
 import { useDemo } from '../lib/demo'
@@ -21,6 +21,8 @@ import { useProjectViewMode, useShowCompletedPref } from '../lib/liveData'
 import { saveShowCompleted } from '../lib/sections'
 import { isReusable } from '../lib/reusable'
 import { printItems } from './menus/printItem'
+import { readAppearance } from '../lib/appearance'
+import { useUserPrefsRow } from '../lib/localData'
 
 export { moveTargets, projectMenuGroups, type MoveTarget } from './menus/projectMenu'
 
@@ -56,6 +58,11 @@ export function ProjectHeader({ project, userId, actions, layout, subtitle, phon
   const [publicLinks, setPublicLinks] = useState(0)
 
   const openTasks = useOpenTaskCount(project.id)
+  // A large title on a roomy phone (roomy-density D5): the page's day head, the title at
+  // the display step with only the progress beside it, under a bar of buttons.
+  const prefs = useUserPrefsRow()
+  const desktop = useMediaQuery(DESKTOP_HEADER_QUERY)
+  const largeTitle = !!phone && !desktop && readAppearance(prefs ?? null).density === 'roomy'
   // The project's own progress beside its title (task-progress D4): the All projects rule, patched per write; an area never finishes, so it has none.
   const liveTasks = useLiveTasks()
   const share = liveTasks && projectFlowOf(project) !== 'area' ? shareOf(projectProgressOf(liveTasks).get(project.id)) : null
@@ -157,7 +164,7 @@ export function ProjectHeader({ project, userId, actions, layout, subtitle, phon
   // shows the same text as its lead line, whole or not at all (tablet-header-room).
   const phoneMeta = [
     percent === null ? '' : t('{n}% done', { n: percent }),
-    membership ? `${membership.members.length} · ${roleName(role)}` : '',
+    membership && !largeTitle ? `${membership.members.length} · ${roleName(role)}` : '',
     role === 'viewer' ? t('Read-only') : '',
     inMaintenance(project) ? t('In maintenance') : '',
     online && managesLinks && publicLinks > 0 ? t('Public') : '',
@@ -166,6 +173,7 @@ export function ProjectHeader({ project, userId, actions, layout, subtitle, phon
   return (
     <>
       <PageHeader title={title} subtitle={phone ? (subtitle ?? phoneMeta) : subtitle} leading={<ProjectMark project={project} size="md" />} meta={phone ? phoneMeta : meta} help="project"
+        kind={largeTitle ? 'day' : 'tool'}
         barActions={!!phone}
         actions={phone ? phone.slots : <>
           {layout}

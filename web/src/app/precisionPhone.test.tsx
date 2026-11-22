@@ -5,6 +5,7 @@
 // and Search (D3, tabBar.test.tsx), and the task page stacks its facts (D4).
 import 'fake-indexeddb/auto'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { setAppearance } from '../lib/appearance'
 import { db } from '../lib/db'
 import { createProject, createTask, resetDeviceId } from '../lib/ops'
 import type { User } from '../lib/types'
@@ -77,6 +78,21 @@ describe('the day head on a phone (D1)', () => {
     navigate({ view: 'project', id: project })
     await waitFor(() => document.querySelector('[data-phone-bar] [data-phone-title]')?.textContent === 'Home')
     expect(document.querySelector('[data-phone-bar]')!.className).toContain('border-b')
+    await r.unmount()
+  })
+
+  it('with Roomy a project gets the large title with only its progress beside it (roomy-density D5)', async () => {
+    const project = await createProject({ name: 'Groceries' })
+    await createTask({ title: 'Yeast', project_id: project })
+    await setAppearance('density', 'roomy')
+    navigate({ view: 'project', id: project })
+    const r = await render(<Shell user={user} onLogout={() => {}} />)
+    await waitFor(() => document.querySelector('h1[data-page-title]')?.textContent === 'Groceries', 'the large title')
+    expect(document.querySelector('h1[data-page-title]')!.className).toContain('text-display')
+    expect(document.querySelector('[data-page-lead]')!.textContent).toBe('0% done')
+    // The bar keeps its buttons and gives up its title; one level-one heading on the page.
+    expect(document.querySelector('[data-phone-bar] [data-phone-title]')).toBeNull()
+    expect([...document.querySelectorAll('h1')].map((h) => h.textContent)).toEqual(['Groceries'])
     await r.unmount()
   })
 })

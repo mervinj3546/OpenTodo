@@ -24,6 +24,14 @@ On a coarse pointer the grip (`[data-row-grip]`) is hidden: the row body's long 
 
 Rejected: hiding the grip in every density (it is the phone's selection control by spec), and dropping the slot per row (checks would zigzag in a list with subtasks).
 
+### D5. A large title on a roomy phone
+
+On a phone (below the desktop header width) with Roomy, `ProjectHeader` passes `kind="day"` to `PageHeader`: the head Today and Upcoming already use (precision-phone D1), with the title at the display step in the page and a bar of buttons only. Its lead is the phone line without the member count; members stay one tap away under Share in the project menu. The head scrolls with the list; the bar does not bring the title back on scroll.
+
+Interface budget: the head is a row in the page, as on a day page, so a roomy project on a phone has the bar, the head and the quick add above the first task: the same as Today, one more than a project in the other densities. Desktop and the other densities are unchanged.
+
+Rejected: a large-title mode for every page in Roomy (Inbox, labels and filters have no progress and other leads; a later change can extend it), and bringing the title into the bar on scroll (a scroll observer for a cosmetic step).
+
 ## Data model impact
 
 None: a new value of an existing string field. No op schema change.

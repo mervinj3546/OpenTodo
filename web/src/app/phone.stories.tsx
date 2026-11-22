@@ -6,6 +6,7 @@ import { createProject, createTask, setTaskCompleted } from '../lib/ops'
 import { navigate } from './router'
 import { Shell } from './Shell'
 import { Sidebar } from './Sidebar'
+import { setAppearance } from '../lib/appearance'
 import { setMethodMode } from '../lib/method/mode'
 import { openTask } from './signals'
 import { TaskRow } from './TaskRow'
@@ -134,11 +135,12 @@ function Roomy({ children }: { children: ReactNode }) {
   return children
 }
 
-/** The same list with the Roomy density (roomy-density D1): each row a card on the canvas, a larger title and check. */
+/** The same list with the Roomy density (roomy-density D1, D5): each row a card on the canvas, a larger title and check, and the list's name as a large title with its progress. */
 export const ShoppingListRoomy: StoryObj = {
   name: 'Shopping list, roomy',
   ...withSeed(async () => {
     await seedShopping()
+    await setAppearance('density', 'roomy')
     navigate({ view: 'project', id: seeded.costco })
   }),
   render: () => <Roomy><Viewport><Shell user={storyUser} onLogout={noop} /></Viewport></Roomy>,

@@ -38,7 +38,7 @@ Three pages, **Theme and density**, **Sidebar** and **Task details**. These choi
 - **Mode**: **System** follows your device's light or dark setting (the default), **Light** and **Dark** keep the app that way whatever the device says.
 - **Theme**: the colours of the whole app, one [theme](themes.md) for light and one for dark.
 - **Accent**: the colour of buttons, links and selected items: **Emerald** (the default) to **Graphite**, or [**Custom**](custom-accent.md). The arrow keys move between the tiles; on a phone they are one scrollable row.
-- **Density**: **Compact**, **Comfortable** (the default) or **Roomy**. Compact tightens rows, headers and the sidebar; Roomy draws each task as a larger card. Touch targets stay full size in all three.
+- **Density**: **Compact**, **Comfortable** (the default) or **Roomy**: tighter rows, or each task as a card and, on a phone, a large list title. Touch targets stay full size.
 - **Task rows**: [one line or detailed](row-layouts.md).
 - **Show full task titles**: long titles wrap instead of ending with **…**.
 - **Haptic feedback**: a tick on completion, drags, switches and failures. On by default where supported.
