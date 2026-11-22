@@ -50,22 +50,36 @@ const names = () => [...document.querySelectorAll('[data-attachment-open]')].map
 const item = (name: string) => [...document.querySelectorAll<HTMLElement>('[data-attachment-open]')].find((b) => b.textContent === name)!
 
 describe('AttachmentsRow', () => {
-  it('in the phone app opens an image in its own viewer, with Download there (attachment-viewer)', async () => {
+  it('in the phone app opens an image in its own viewer and saves it through the share sheet (attachment-viewer)', async () => {
     window.opentodoShell = { bridge: 1, platform: 'ios', app: '1.5.0', capabilities: [] }
+    const share = vi.fn().mockResolvedValue(undefined)
+    Object.assign(navigator, { share, canShare: () => true })
     try {
+      vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(new Blob(['jpg'], { type: 'image/jpeg' })))
+      vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:receipt')
       await mount()
       await remoteFile('a-img', 'Receipt.jpg', 'image/jpeg')
       await waitFor(() => names().includes('Receipt.jpg'))
       const open = vi.fn()
       vi.stubGlobal('open', open)
       const saves = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {})
-      await click(item('Receipt.jpg'))
+      // The row's Download opens the viewer too: a download is what fails in the iOS app.
+      await click(document.querySelector<HTMLElement>('[aria-label="Download Receipt.jpg"]')!)
       await waitFor(() => !!document.querySelector('[data-testid="image-viewer"] img'))
-      expect(document.querySelector('[data-testid="image-viewer"] img')!.getAttribute('src')).toBe('/api/v1/attachments/a-img/content')
+      expect(document.querySelector('[data-testid="image-viewer"] img')!.getAttribute('src')).toBe('blob:receipt')
+      const save = [...document.querySelectorAll<HTMLButtonElement>('[data-testid="image-viewer"] button')].find((b) => b.textContent === 'Save')!
+      await click(save)
+      expect(share).toHaveBeenCalledTimes(1)
+      expect((share.mock.calls[0][0] as ShareData).files![0].name).toBe('Receipt.jpg')
       expect(open).not.toHaveBeenCalled()
       expect(saves).not.toHaveBeenCalled()
-    } finally { delete window.opentodoShell }
+    } finally {
+      delete window.opentodoShell
+      delete (navigator as Partial<Navigator>).share
+      delete (navigator as Partial<Navigator>).canShare
+    }
   })
+
 
   it('adds a file from the picker and opens an uploaded one with Enter, by keyboard only', async () => {
     const v = await mount()

@@ -157,7 +157,8 @@ export function AttachmentsRow({ taskId, userId, role, dropTarget, note }: {
       }
     }
     setNotes((n) => { const { [a.id]: _, ...rest } = n; return rest })
-    if (!download && viewsInApp(a)) return setViewing(a)
+    // In a phone shell an image's eye and Download both open the viewer, which saves through the share sheet (D4).
+    if (viewsInApp(a)) return setViewing(a)
     try {
       await openAttachment(a, { download })
     } catch (err) {
@@ -309,10 +310,12 @@ export function AttachmentItem({ a, blob, selected, missing, note, renaming, can
   return (
     <li data-attachment={a.id} aria-current={selected || undefined} onFocus={onSelect}
       className={`group flex items-center gap-2 rounded-control px-1 py-1 ${selected ? 'bg-sunken dark:bg-raised' : 'hover:bg-sunken dark:hover:bg-raised'}`}>
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-control bg-sunken text-faint">
+      {/* The thumbnail opens the file too (attachment-viewer D5): a photo is what a thumb aims at. */}
+      <button type="button" tabIndex={-1} aria-label={a.url ? t('Open link {name}', { name: a.name }) : t('Open {name}', { name: a.name })} onClick={() => onOpen(false)}
+        className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-control bg-sunken text-faint">
         {thumb ? <img src={thumb} alt="" className="h-full w-full object-cover" onError={() => { if (!local) onMissing() }} />
           : <Icon name={a.url ? 'link' : isImage(a.mime) ? 'image' : 'file'} />}
-      </span>
+      </button>
       <div className="min-w-0 flex-1">
         {renaming ? <RenameField initial={a.name} onDone={onRenamed} /> : (
           <Tooltip label={a.name}>

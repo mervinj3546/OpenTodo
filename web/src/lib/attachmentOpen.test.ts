@@ -4,7 +4,7 @@
 // browser, which has no session and no object URL of the page. In a shell every open is
 // a save, through the paths the shell handles (shell-repairs "Saving a file from the app").
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { imageSource, openAttachment, viewsInApp } from './attachmentOpen'
+import { imageFile, openAttachment, viewsInApp } from './attachmentOpen'
 import { db, useDatabase } from './db'
 import type { OpenTodoShell } from './shell'
 import type { Attachment } from './types'
@@ -152,14 +152,14 @@ describe('the image viewer of the phone app (attachment-viewer)', () => {
     expect(viewsInApp(file({ mime: 'image/svg+xml', url: 'https://example.com/a.svg' }))).toBe(false)
   })
 
-  it('shows the device copy when it holds one, else the server copy served inline', async () => {
-    expect((await imageSource(file({ mime: 'image/png' }))).src).toBe('/api/v1/attachments/a1/content')
-    await db.attachmentBlobs.put({ id: 'a1', blob: new Blob(['x'], { type: 'image/png' }) } as never)
-    vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:x')
-    const revoke = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {})
-    const s = await imageSource(file({ mime: 'image/png' }))
-    expect(s.src).toBe('blob:x')
-    s.release()
-    expect(revoke).toHaveBeenCalledWith('blob:x')
+  it('shows the device copy when it holds one, else fetches the server copy', async () => {
+    const fetched = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(new Blob(['srv'], { type: 'image/png' })))
+    const remote = await imageFile(file({ mime: 'image/png', name: 'photo.png' }))
+    expect(fetched.mock.calls[0][0]).toBe('/api/v1/attachments/a1/content')
+    expect([remote.name, remote.type, await remote.text()]).toEqual(['photo.png', 'image/png', 'srv'])
+    fetched.mockClear()
+    vi.spyOn(db.attachmentBlobs, 'get').mockResolvedValue({ id: 'a1', blob: new Blob(['dev'], { type: 'image/png' }) } as never)
+    expect(await (await imageFile(file({ mime: 'image/png' }))).text()).toBe('dev')
+    expect(fetched).not.toHaveBeenCalled()
   })
 })

@@ -85,29 +85,26 @@ export function viewsInApp(a: Pick<Attachment, 'url' | 'mime'>): boolean {
 }
 
 /**
- * An address the image viewer can show (attachment-viewer D2): this device's copy (also
- * offline), the decrypted file of an encrypted account, or else the server's, which
- * serves images inline. `release` frees an object URL when the viewer closes.
+ * The image the viewer shows (attachment-viewer D2): this device's copy (also offline),
+ * the decrypted file of an encrypted account, or else the server's. The viewer holds the
+ * bytes, so Save hands them to the share sheet within the tap, without a download.
  */
-export async function imageSource(a: Attachment): Promise<{ src: string; release: () => void }> {
+export async function imageFile(a: Attachment): Promise<File> {
   const local = await db.attachmentBlobs.get(a.id)
-  let blob: Blob | null = null
-  if (a.encrypted) {
-    const key = await currentKey()
-    if (!key) throw new AttachmentError('locked', t('Unlock encryption on this device to open this file.'))
-    let envelope = local?.blob
-    if (!envelope) {
+  let blob = local?.blob
+  if (!blob || a.encrypted) {
+    if (!blob) {
       const res = await fetchWithTimeout(contentUrl(a.id), { credentials: 'same-origin', timeoutMs: transferTimeoutMs() })
       if (!res.ok) throw new AttachmentError('invalid', res.status === 404 ? t('This file is missing on the server.') : t('The server answered {status}.', { status: res.status }))
-      envelope = await res.blob()
+      blob = await res.blob()
     }
-    blob = await decryptFile(key, fileKeyOf(a), envelope, a.mime)
-  } else if (local) {
-    blob = new Blob([local.blob], { type: a.mime })
+    if (a.encrypted) {
+      const key = await currentKey()
+      if (!key) throw new AttachmentError('locked', t('Unlock encryption on this device to open this file.'))
+      blob = await decryptFile(key, fileKeyOf(a), blob, a.mime)
+    }
   }
-  if (!blob) return { src: contentUrl(a.id), release: () => {} }
-  const src = URL.createObjectURL(blob)
-  return { src, release: () => URL.revokeObjectURL(src) }
+  return new File([blob], a.name, { type: a.mime })
 }
 
 /** Open bytes held on this device; types the browser should not render are downloaded. */
