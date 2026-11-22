@@ -4,7 +4,7 @@
 // browser, which has no session and no object URL of the page. In a shell every open is
 // a save, through the paths the shell handles (shell-repairs "Saving a file from the app").
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { openAttachment } from './attachmentOpen'
+import { imageSource, openAttachment, viewsInApp } from './attachmentOpen'
 import { db, useDatabase } from './db'
 import type { OpenTodoShell } from './shell'
 import type { Attachment } from './types'
@@ -140,5 +140,26 @@ describe('opening an attachment in a browser tab, inside the click (WebKit)', ()
     await openAttachment(file({ mime: 'application/zip', name: 'a.zip', uploaded_at: 0 } as Partial<Attachment>))
     await vi.waitFor(() => expect(clicks).toHaveLength(1))
     expect(clicks[0].href).toBe('blob:https://todo.example.com/z')
+  })
+})
+
+describe('the image viewer of the phone app (attachment-viewer)', () => {
+  it('opens an uploaded image in the app, and nothing else', () => {
+    expect(viewsInApp(file({ mime: 'image/jpeg' }))).toBe(false)
+    window.opentodoShell = iosShell
+    expect(viewsInApp(file({ mime: 'image/jpeg' }))).toBe(true)
+    expect(viewsInApp(file())).toBe(false)
+    expect(viewsInApp(file({ mime: 'image/svg+xml', url: 'https://example.com/a.svg' }))).toBe(false)
+  })
+
+  it('shows the device copy when it holds one, else the server copy served inline', async () => {
+    expect((await imageSource(file({ mime: 'image/png' }))).src).toBe('/api/v1/attachments/a1/content')
+    await db.attachmentBlobs.put({ id: 'a1', blob: new Blob(['x'], { type: 'image/png' }) } as never)
+    vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:x')
+    const revoke = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {})
+    const s = await imageSource(file({ mime: 'image/png' }))
+    expect(s.src).toBe('blob:x')
+    s.release()
+    expect(revoke).toHaveBeenCalledWith('blob:x')
   })
 })

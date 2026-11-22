@@ -2,7 +2,7 @@
 // as a download for a type the browser should not render. In a phone shell, which has
 // no tabs, every file is saved through the shell's save dialog (#1654). Kept out of
 // lib/attachments.ts, which the sync path imports: it opens pages and object URLs.
-import { AttachmentError, contentUrl, fileKeyOf, isInlineType, linkHref } from './attachments'
+import { AttachmentError, contentUrl, fileKeyOf, isImage, isInlineType, linkHref } from './attachments'
 import { decryptFile } from './crypto'
 import { db } from './db'
 import { currentKey } from './e2ee'
@@ -74,6 +74,40 @@ async function openFile(a: Attachment, opts: { download?: boolean }, tab: Window
   }
   if (tab) tab.location.href = contentUrl(a.id, opts.download)
   else window.open(contentUrl(a.id, opts.download), '_blank', 'noopener')
+}
+
+/**
+ * Whether an attachment opens in the app's own image viewer (attachment-viewer D1): an
+ * uploaded image in a phone shell, which has no tabs, and where saving is not a preview.
+ */
+export function viewsInApp(a: Pick<Attachment, 'url' | 'mime'>): boolean {
+  return !a.url && isImage(a.mime) && !!shell()
+}
+
+/**
+ * An address the image viewer can show (attachment-viewer D2): this device's copy (also
+ * offline), the decrypted file of an encrypted account, or else the server's, which
+ * serves images inline. `release` frees an object URL when the viewer closes.
+ */
+export async function imageSource(a: Attachment): Promise<{ src: string; release: () => void }> {
+  const local = await db.attachmentBlobs.get(a.id)
+  let blob: Blob | null = null
+  if (a.encrypted) {
+    const key = await currentKey()
+    if (!key) throw new AttachmentError('locked', t('Unlock encryption on this device to open this file.'))
+    let envelope = local?.blob
+    if (!envelope) {
+      const res = await fetchWithTimeout(contentUrl(a.id), { credentials: 'same-origin', timeoutMs: transferTimeoutMs() })
+      if (!res.ok) throw new AttachmentError('invalid', res.status === 404 ? t('This file is missing on the server.') : t('The server answered {status}.', { status: res.status }))
+      envelope = await res.blob()
+    }
+    blob = await decryptFile(key, fileKeyOf(a), envelope, a.mime)
+  } else if (local) {
+    blob = new Blob([local.blob], { type: a.mime })
+  }
+  if (!blob) return { src: contentUrl(a.id), release: () => {} }
+  const src = URL.createObjectURL(blob)
+  return { src, release: () => URL.revokeObjectURL(src) }
 }
 
 /** Open bytes held on this device; types the browser should not render are downloaded. */

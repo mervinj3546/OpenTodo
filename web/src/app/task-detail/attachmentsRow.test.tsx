@@ -50,6 +50,23 @@ const names = () => [...document.querySelectorAll('[data-attachment-open]')].map
 const item = (name: string) => [...document.querySelectorAll<HTMLElement>('[data-attachment-open]')].find((b) => b.textContent === name)!
 
 describe('AttachmentsRow', () => {
+  it('in the phone app opens an image in its own viewer, with Download there (attachment-viewer)', async () => {
+    window.opentodoShell = { bridge: 1, platform: 'ios', app: '1.5.0', capabilities: [] }
+    try {
+      await mount()
+      await remoteFile('a-img', 'Receipt.jpg', 'image/jpeg')
+      await waitFor(() => names().includes('Receipt.jpg'))
+      const open = vi.fn()
+      vi.stubGlobal('open', open)
+      const saves = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {})
+      await click(item('Receipt.jpg'))
+      await waitFor(() => !!document.querySelector('[data-testid="image-viewer"] img'))
+      expect(document.querySelector('[data-testid="image-viewer"] img')!.getAttribute('src')).toBe('/api/v1/attachments/a-img/content')
+      expect(open).not.toHaveBeenCalled()
+      expect(saves).not.toHaveBeenCalled()
+    } finally { delete window.opentodoShell }
+  })
+
   it('adds a file from the picker and opens an uploaded one with Enter, by keyboard only', async () => {
     const v = await mount()
     const input = v.container.querySelector<HTMLInputElement>('[data-testid="attachment-picker"]')!

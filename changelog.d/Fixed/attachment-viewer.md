@@ -1,0 +1,1 @@
+- **Photos open in the phone apps.** Tapping an image attachment in the iPhone or Android app shows it full screen, with Download there, instead of starting a save that could end on a "Frame load interrupted" page.

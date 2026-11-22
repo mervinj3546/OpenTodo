@@ -7,7 +7,8 @@ import {
   AttachmentError, contentUrl, formatBytes, isImage, parentNote, parseLink, queueFiles, queueLink, removeAttachment, renameAttachment,
   retryUpload, stateOf, useAttachmentLimits, useUploadProgress, type AttachmentState,
 } from '../../lib/attachments'
-import { openAttachment } from '../../lib/attachmentOpen'
+import { openAttachment, viewsInApp } from '../../lib/attachmentOpen'
+import { ImageViewer } from './ImageViewer'
 import { useAttachmentBlobs, useTask, useTaskAttachments, type AttachmentBlob } from '../../lib/localData'
 import { embeddedIds } from '../../lib/markdown'
 import { useDemo } from '../../lib/demo'
@@ -76,6 +77,7 @@ export function AttachmentsRow({ taskId, userId, role, dropTarget, note }: {
   const [active, setActive] = useState(0)
   const [renaming, setRenaming] = useState<string | null>(null)
   const [removing, setRemoving] = useState<Attachment | null>(null)
+  const [viewing, setViewing] = useState<Attachment | null>(null)
   const [linking, setLinking] = useState(false)
   const [notes, setNotes] = useState<Record<string, string>>({})
   const [missing, setMissing] = useState<Set<string>>(new Set())
@@ -155,6 +157,7 @@ export function AttachmentsRow({ taskId, userId, role, dropTarget, note }: {
       }
     }
     setNotes((n) => { const { [a.id]: _, ...rest } = n; return rest })
+    if (!download && viewsInApp(a)) return setViewing(a)
     try {
       await openAttachment(a, { download })
     } catch (err) {
@@ -233,6 +236,7 @@ export function AttachmentsRow({ taskId, userId, role, dropTarget, note }: {
         </div>
       )}
       {error && <p role="alert" className="mt-1 text-meta text-danger">{error}</p>}
+      {viewing && <ImageViewer a={viewing} onClose={() => setViewing(null)} />}
       {removing && (
         <ConfirmDialog title={t('Remove attachment?')} consequence={embedded.includes(removing.id)
           // The task's notes show it (editor-everywhere D5): say so before it becomes "Removed image" there.
@@ -375,6 +379,7 @@ export function CommentAttachments({ list }: { list: Attachment[] }) {
   // Read live, not awaited on the tap: the open must stay inside the click (Safari
   // blocks a tab opened after an await; lib/attachmentOpen.ts).
   const blobs = useAttachmentBlobs(list)
+  const [viewing, setViewing] = useState<Attachment | null>(null)
   if (list.length === 0) return null
   async function open(a: Attachment) {
     setNote(null)
@@ -382,6 +387,7 @@ export function CommentAttachments({ list }: { list: Attachment[] }) {
       if (typeof navigator !== 'undefined' && navigator.onLine === false) return setNote(t('Connect to the internet to open this file.'))
       if (!a.uploaded_at) return setNote(t('This file is still uploading.'))
     }
+    if (viewsInApp(a)) return setViewing(a)
     try {
       await openAttachment(a)
     } catch (err) {
@@ -405,6 +411,7 @@ export function CommentAttachments({ list }: { list: Attachment[] }) {
         ))}
       </ul>
       {note && <p role="status" className="mt-0.5 text-meta text-muted">{note}</p>}
+      {viewing && <ImageViewer a={viewing} onClose={() => setViewing(null)} />}
     </div>
   )
 }
