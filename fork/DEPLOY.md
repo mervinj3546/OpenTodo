@@ -20,7 +20,7 @@ The fork is public: never commit `docker-compose.override.yml`, `local/` or anyt
 2. Check it: `cd web && npx vitest run` (or the affected tests) and `make web-lint`. `make check` needs Go.
 3. Commit, then build:
    ```sh
-   fork/build.sh            # prints e.g. "built opentodo:1.6.0-main.292c1d0-custom"
+   fork/build.sh            # prints e.g. "built opentodo:1.6.0-main.292c1d0-custom.239eaaf"
    ```
 4. Back up (Settings → Server → Backups → **Back up now**).
 5. Put the printed tag in `docker-compose.override.yml` (`image:`), then:
@@ -46,7 +46,7 @@ Then create `docker-compose.override.yml` next to `docker-compose.yml` (Compose 
 ```yaml
 services:
   opentodo:
-    image: opentodo:1.6.0-main.292c1d0-custom   # the tag build.sh printed
+    image: opentodo:1.6.0-main.292c1d0-custom.239eaaf   # the tag build.sh printed
     pull_policy: never                         # never look for it on a registry
     environment:
       - TZ=America/Los_Angeles
