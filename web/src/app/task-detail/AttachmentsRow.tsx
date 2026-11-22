@@ -7,7 +7,8 @@ import {
   AttachmentError, contentUrl, formatBytes, isImage, parentNote, parseLink, queueFiles, queueLink, removeAttachment, renameAttachment,
   retryUpload, stateOf, useAttachmentLimits, useUploadProgress, type AttachmentState,
 } from '../../lib/attachments'
-import { openAttachment } from '../../lib/attachmentOpen'
+import { openAttachment, viewsInApp } from '../../lib/attachmentOpen'
+import { ImageViewer } from './ImageViewer'
 import { hasAttachmentBlob, useAttachmentBlobs, useTask, useTaskAttachments, type AttachmentBlob } from '../../lib/localData'
 import { embeddedIds } from '../../lib/markdown'
 import { useDemo } from '../../lib/demo'
@@ -76,6 +77,7 @@ export function AttachmentsRow({ taskId, userId, role, dropTarget, note }: {
   const [active, setActive] = useState(0)
   const [renaming, setRenaming] = useState<string | null>(null)
   const [removing, setRemoving] = useState<Attachment | null>(null)
+  const [viewing, setViewing] = useState<Attachment | null>(null)
   const [linking, setLinking] = useState(false)
   const [notes, setNotes] = useState<Record<string, string>>({})
   const [missing, setMissing] = useState<Set<string>>(new Set())
@@ -155,6 +157,8 @@ export function AttachmentsRow({ taskId, userId, role, dropTarget, note }: {
       }
     }
     setNotes((n) => { const { [a.id]: _, ...rest } = n; return rest })
+    // In a phone shell an image's eye and Download both open the viewer, which saves through the share sheet (D4).
+    if (viewsInApp(a)) return setViewing(a)
     try {
       await openAttachment(a, { download })
     } catch (err) {
@@ -233,6 +237,7 @@ export function AttachmentsRow({ taskId, userId, role, dropTarget, note }: {
         </div>
       )}
       {error && <p role="alert" className="mt-1 text-meta text-danger">{error}</p>}
+      {viewing && <ImageViewer a={viewing} onClose={() => setViewing(null)} />}
       {removing && (
         <ConfirmDialog title={t('Remove attachment?')} consequence={embedded.includes(removing.id)
           // The task's notes show it (editor-everywhere D5): say so before it becomes "Removed image" there.
@@ -305,10 +310,12 @@ export function AttachmentItem({ a, blob, selected, missing, note, renaming, can
   return (
     <li data-attachment={a.id} aria-current={selected || undefined} onFocus={onSelect}
       className={`group flex items-center gap-2 rounded-control px-1 py-1 ${selected ? 'bg-sunken dark:bg-raised' : 'hover:bg-sunken dark:hover:bg-raised'}`}>
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-control bg-sunken text-faint">
+      {/* The thumbnail opens the file too (attachment-viewer D5): a photo is what a thumb aims at. */}
+      <button type="button" tabIndex={-1} aria-label={a.url ? t('Open link {name}', { name: a.name }) : t('Open {name}', { name: a.name })} onClick={() => onOpen(false)}
+        className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-control bg-sunken text-faint">
         {thumb ? <img src={thumb} alt="" className="h-full w-full object-cover" onError={() => { if (!local) onMissing() }} />
           : <Icon name={a.url ? 'link' : isImage(a.mime) ? 'image' : 'file'} />}
-      </span>
+      </button>
       <div className="min-w-0 flex-1">
         {renaming ? <RenameField initial={a.name} onDone={onRenamed} /> : (
           <Tooltip label={a.name}>
@@ -372,6 +379,7 @@ function safeHost(url: string): string {
 /** The attachments of one comment, under its text (design D7): open on activation. */
 export function CommentAttachments({ list }: { list: Attachment[] }) {
   const [note, setNote] = useState<string | null>(null)
+  const [viewing, setViewing] = useState<Attachment | null>(null)
   if (list.length === 0) return null
   async function open(a: Attachment) {
     setNote(null)
@@ -379,6 +387,7 @@ export function CommentAttachments({ list }: { list: Attachment[] }) {
       if (typeof navigator !== 'undefined' && navigator.onLine === false) return setNote(t('Connect to the internet to open this file.'))
       if (!a.uploaded_at) return setNote(t('This file is still uploading.'))
     }
+    if (viewsInApp(a)) return setViewing(a)
     try {
       await openAttachment(a)
     } catch (err) {
@@ -402,6 +411,7 @@ export function CommentAttachments({ list }: { list: Attachment[] }) {
         ))}
       </ul>
       {note && <p role="status" className="mt-0.5 text-meta text-muted">{note}</p>}
+      {viewing && <ImageViewer a={viewing} onClose={() => setViewing(null)} />}
     </div>
   )
 }

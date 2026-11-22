@@ -2,7 +2,7 @@
 // as a download for a type the browser should not render. In a phone shell, which has
 // no tabs, every file is saved through the shell's save dialog (#1654). Kept out of
 // lib/attachments.ts, which the sync path imports: it opens pages and object URLs.
-import { AttachmentError, contentUrl, fileKeyOf, isInlineType, linkHref } from './attachments'
+import { AttachmentError, contentUrl, fileKeyOf, isImage, isInlineType, linkHref } from './attachments'
 import { decryptFile } from './crypto'
 import { db } from './db'
 import { currentKey } from './e2ee'
@@ -48,6 +48,37 @@ export async function openAttachment(a: Attachment, opts: { download?: boolean }
     return
   }
   window.open(contentUrl(a.id, opts.download), '_blank', 'noopener')
+}
+
+/**
+ * Whether an attachment opens in the app's own image viewer (attachment-viewer D1): an
+ * uploaded image in a phone shell, which has no tabs, and where saving is not a preview.
+ */
+export function viewsInApp(a: Pick<Attachment, 'url' | 'mime'>): boolean {
+  return !a.url && isImage(a.mime) && !!shell()
+}
+
+/**
+ * The image the viewer shows (attachment-viewer D2): this device's copy (also offline),
+ * the decrypted file of an encrypted account, or else the server's. The viewer holds the
+ * bytes, so Save hands them to the share sheet within the tap, without a download.
+ */
+export async function imageFile(a: Attachment): Promise<File> {
+  const local = await db.attachmentBlobs.get(a.id)
+  let blob = local?.blob
+  if (!blob || a.encrypted) {
+    if (!blob) {
+      const res = await fetchWithTimeout(contentUrl(a.id), { credentials: 'same-origin', timeoutMs: transferTimeoutMs() })
+      if (!res.ok) throw new AttachmentError('invalid', res.status === 404 ? t('This file is missing on the server.') : t('The server answered {status}.', { status: res.status }))
+      blob = await res.blob()
+    }
+    if (a.encrypted) {
+      const key = await currentKey()
+      if (!key) throw new AttachmentError('locked', t('Unlock encryption on this device to open this file.'))
+      blob = await decryptFile(key, fileKeyOf(a), blob, a.mime)
+    }
+  }
+  return new File([blob], a.name, { type: a.mime })
 }
 
 /** Open bytes held on this device; types the browser should not render are downloaded. */

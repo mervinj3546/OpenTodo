@@ -4,7 +4,7 @@
 // browser, which has no session and no object URL of the page. In a shell every open is
 // a save, through the paths the shell handles (shell-repairs "Saving a file from the app").
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { openAttachment } from './attachmentOpen'
+import { imageFile, openAttachment, viewsInApp } from './attachmentOpen'
 import { db, useDatabase } from './db'
 import type { OpenTodoShell } from './shell'
 import type { Attachment } from './types'
@@ -64,5 +64,26 @@ describe('opening an attachment in the phone app (#1654)', () => {
     const opened = vi.spyOn(window, 'open').mockImplementation(() => null)
     await openAttachment(file())
     expect(opened).toHaveBeenCalledWith('/api/v1/attachments/a1/content', '_blank', 'noopener')
+  })
+})
+
+describe('the image viewer of the phone app (attachment-viewer)', () => {
+  it('opens an uploaded image in the app, and nothing else', () => {
+    expect(viewsInApp(file({ mime: 'image/jpeg' }))).toBe(false)
+    window.opentodoShell = iosShell
+    expect(viewsInApp(file({ mime: 'image/jpeg' }))).toBe(true)
+    expect(viewsInApp(file())).toBe(false)
+    expect(viewsInApp(file({ mime: 'image/svg+xml', url: 'https://example.com/a.svg' }))).toBe(false)
+  })
+
+  it('shows the device copy when it holds one, else fetches the server copy', async () => {
+    const fetched = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(new Blob(['srv'], { type: 'image/png' })))
+    const remote = await imageFile(file({ mime: 'image/png', name: 'photo.png' }))
+    expect(fetched.mock.calls[0][0]).toBe('/api/v1/attachments/a1/content')
+    expect([remote.name, remote.type, await remote.text()]).toEqual(['photo.png', 'image/png', 'srv'])
+    fetched.mockClear()
+    vi.spyOn(db.attachmentBlobs, 'get').mockResolvedValue({ id: 'a1', blob: new Blob(['dev'], { type: 'image/png' }) } as never)
+    expect(await (await imageFile(file({ mime: 'image/png' }))).text()).toBe('dev')
+    expect(fetched).not.toHaveBeenCalled()
   })
 })
