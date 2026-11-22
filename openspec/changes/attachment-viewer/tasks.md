@@ -6,3 +6,7 @@
 ## 2. Release
 
 - [x] 2.1 Changelog fragment `changelog.d/Fixed/attachment-viewer.md`
+
+## 3. On a device
+
+- [ ] 3.1 In the iOS app from the App Store: a photo opens in the viewer from its thumbnail, eye and Download; Save shows the share sheet and Save Image writes it to Photos; a PDF still saves as before
