@@ -15597,6 +15597,7 @@
     "web/src/app/profile/ProfileSection.tsx",
     "web/src/app/routines/RoutineEditor.tsx",
     "web/src/app/task-detail/CommentsTab.tsx",
+    "web/src/app/task-detail/ImageViewer.tsx",
     "web/src/app/task-detail/TimeTab.tsx",
     "web/src/app/task-list/InlineEditor.tsx",
     "web/src/app/themes/ThemeEditor.tsx",
@@ -19472,7 +19473,8 @@
     "web/src/lib/assistant.ts"
   ],
   "This file could not be opened.": [
-    "web/src/app/task-detail/AttachmentsRow.tsx"
+    "web/src/app/task-detail/AttachmentsRow.tsx",
+    "web/src/app/task-detail/ImageViewer.tsx"
   ],
   "This file is a template. Importing it creates it once, with the ids and dates in the file. To start a fresh copy with dates moved to a start day, use": [
     "web/src/app/ImportScreen.tsx"
@@ -21006,6 +21008,9 @@
   ],
   "Unpin {name}": [
     "web/src/app/ViewsView.tsx"
+  ],
+  "Unread changes": [
+    "web/src/app/Sidebar.tsx"
   ],
   "Unsaved changes": [
     "web/src/app/routines/RoutineEditor.tsx",
@@ -24722,9 +24727,6 @@
   "unknown pattern \"{word}\"": [
     "web/src/lib/recurrence.ts",
     "web/src/lib/testdata/recurrence-1.0.ts"
-  ],
-  "unread changes": [
-    "web/src/app/Sidebar.tsx"
   ],
   "unread updates": [
     "web/src/app/Sidebar.tsx"

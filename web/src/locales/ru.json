@@ -7177,7 +7177,6 @@
   "unknown file format; update the app": "неизвестный формат файла; обновите приложение",
   "unknown passkey": "неизвестный ключ доступа",
   "unknown pattern \"{word}\"": "неизвестный шаблон «{word}»",
-  "unread changes": "непрочитанные изменения",
   "unread updates": "непрочитанные обновления",
   "unscheduled": "не запланировано",
   "unsupported key derivation {kdf}; update the app": "неподдерживаемый способ формирования ключа {kdf}; обновите приложение",
@@ -7864,5 +7863,6 @@
   "{name} assigned you a task": "{name} назначил(а) вам задачу",
   "{name} completed a task": "{name} выполнил(а) задачу",
   "{name} reopened a task": "{name} снова открыл(а) задачу",
-  "Roomy": "Просторный"
+  "Roomy": "Просторный",
+  "Unread changes": "Непрочитанные изменения"
 }
