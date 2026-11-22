@@ -60,6 +60,7 @@ describe('preference', () => {
     // The project tree (D6): a top-level project larger, heavier and one tone up; sub-projects unchanged.
     expect(css).toMatch(/:root\[data-density="roomy"\] li\[role="treeitem"\]\[aria-level="1"\] \[data-sidebar-item\] \{ font-size: calc\(var\(--ot-text-list\) \+ 0\.125rem\); font-weight: 600; \}/)
     expect(css).toMatch(/:root\[data-density="roomy"\] li\[role="treeitem"\]\[aria-level="1"\] \[data-sidebar-item\]:not\(\[aria-current\]\) \{ color: var\(--ot-text\); \}/)
+    expect(css).toMatch(/:root\[data-density="roomy"\] li\[role="treeitem"\]:not\(\[aria-level="1"\]\) \[data-sidebar-item\] \{ font-size: max\(1rem, var\(--ot-text-list\)\); \}/) // sub-projects at least 16 px
     // The shape rules come after the phone row, so they outrank it.
     expect(css.indexOf(':root[data-density="roomy"] .row-pad [data-row-title]')).toBeGreaterThan(css.indexOf('[data-row-title] { font-size: calc(var(--ot-text-list) + 0.09375rem); }'))
   })

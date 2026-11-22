@@ -1612,9 +1612,10 @@ li[data-task-id][data-touch-hold] { background-color: color-mix(in oklab, var(--
 @media (pointer: coarse) { :root[data-density="roomy"] .row-pad > [data-row-grip] { display: none; } }
 /* The project tree in a roomy sidebar (roomy-density D6): a top-level project two steps
    above the list size at weight 600 and one tone up from the sidebar's faint names, so
-   groups read as headings; a sub-project keeps the list size and the sidebar's tone. */
+   groups read as headings; a sub-project is at least 16 px and keeps the sidebar's tone. */
 :root[data-density="roomy"] li[role="treeitem"][aria-level="1"] [data-sidebar-item] { font-size: calc(var(--ot-text-list) + 0.125rem); font-weight: 600; }
 :root[data-density="roomy"] li[role="treeitem"][aria-level="1"] [data-sidebar-item]:not([aria-current]) { color: var(--ot-text); }
+:root[data-density="roomy"] li[role="treeitem"]:not([aria-level="1"]) [data-sidebar-item] { font-size: max(1rem, var(--ot-text-list)); }
 :root[data-density="roomy"] :is(ul, ol, [role="tree"]):not(:has([data-leading-slot] > button)) .row-pad > [data-leading-slot] { display: none; }
 
 /* Full task titles (OpenSpec change full-task-titles, design D2): with the setting on,
