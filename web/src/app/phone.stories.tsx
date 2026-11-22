@@ -112,7 +112,12 @@ export const DrawerOpenLoopsFirst: StoryObj = {
 
 /** A shopping list on a phone (roomy-density): four open tasks and the folded-open Completed group, as people keep a list they tick off in a shop. */
 async function seedShopping(): Promise<void> {
-  seeded.costco = await createProject({ name: 'Costco', color: HEX.blue })
+  // A tree like a household's (roomy-density D6): stores under Groceries, and a second group.
+  const groceries = await createProject({ name: 'Groceries', color: HEX.orange })
+  seeded.costco = await createProject({ name: 'Costco', color: HEX.blue, parent_id: groceries })
+  for (const name of ['Indian store', 'Safeway', 'Asian groceries']) await createProject({ name, color: HEX.green, parent_id: groceries })
+  const finance = await createProject({ name: 'Finance', color: HEX.violet })
+  await createProject({ name: 'Cash back calendar', color: HEX.teal, parent_id: finance })
   for (const title of ['Oranges', 'Cashews', 'Onions', 'Quinoa']) await createTask({ title, project_id: seeded.costco })
   for (const title of ['Nuts', 'Canned chickpeas', 'Frozen blueberries', 'Peanut butter', 'Hummus']) await setTaskCompleted(await createTask({ title, project_id: seeded.costco }), true)
 }

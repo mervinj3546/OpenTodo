@@ -8,7 +8,8 @@ On a phone the list is read at arm's length, often one-handed in a shop: 14.5 px
 - Under Roomy every task row in a list is a card of its own: a fill one step from what it sits on, the theme's surface radius and a 4 px gap, with no divider. Rows are 48 px with a fine pointer and 56 px on a phone; the title is two steps above the list size (at least 17 px on a phone) and the check is 24 px.
 - On a phone a roomy card hides the drag grip (long press then move still drags; Select tasks in the page menu still selects), and a list without subtasks drops the subtask arrow's empty slot.
 - On a phone a roomy project page opens with the project's name as a large title and its progress beside it in small text; the member count leaves the header (it stays under Share).
-- Board cards, the sidebar and group headers keep the comfortable sizes.
+- In the sidebar a top-level project reads as a heading over its sub-projects: larger, semibold and brighter.
+- Board cards, the sidebar's row heights and group headers keep the comfortable sizes.
 - The value is an additive string on the existing `density` field: no op schema change. An older client reads it as comfortable and keeps it.
 
 ## Out of scope

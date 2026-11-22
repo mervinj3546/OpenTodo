@@ -57,6 +57,9 @@ describe('preference', () => {
     // Fewer marks (D4): no grip on touch, and no empty fold slot in a list without subtasks.
     expect(css).toMatch(/@media \(pointer: coarse\) \{ :root\[data-density="roomy"\] \.row-pad > \[data-row-grip\] \{ display: none; \} \}/)
     expect(css).toMatch(/:root\[data-density="roomy"\] :is\(ul, ol, \[role="tree"\]\):not\(:has\(\[data-leading-slot\] > button\)\) \.row-pad > \[data-leading-slot\] \{ display: none; \}/)
+    // The project tree (D6): a top-level project larger, heavier and one tone up; sub-projects unchanged.
+    expect(css).toMatch(/:root\[data-density="roomy"\] li\[role="treeitem"\]\[aria-level="1"\] \[data-sidebar-item\] \{ font-size: calc\(var\(--ot-text-list\) \+ 0\.125rem\); font-weight: 600; \}/)
+    expect(css).toMatch(/:root\[data-density="roomy"\] li\[role="treeitem"\]\[aria-level="1"\] \[data-sidebar-item\]:not\(\[aria-current\]\) \{ color: var\(--ot-text\); \}/)
     // The shape rules come after the phone row, so they outrank it.
     expect(css.indexOf(':root[data-density="roomy"] .row-pad [data-row-title]')).toBeGreaterThan(css.indexOf('[data-row-title] { font-size: calc(var(--ot-text-list) + 0.09375rem); }'))
   })

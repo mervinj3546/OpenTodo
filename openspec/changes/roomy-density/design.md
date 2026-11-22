@@ -32,6 +32,12 @@ Interface budget: the head is a row in the page, as on a day page, so a roomy pr
 
 Rejected: a large-title mode for every page in Roomy (Inbox, labels and filters have no progress and other leads; a later change can extend it), and bringing the title into the bar on scroll (a scroll observer for a cosmetic step).
 
+### D6. Project groups in a roomy sidebar
+
+A project row carries its tree level (`li[role="treeitem"][aria-level]`, a flat list indented by padding), so the stylesheet styles levels apart without markup changes: level 1 gets the list size plus 0.125 rem (17 px with a 15 px theme) at weight 600 and the default text tone instead of the sidebar's faint tone; deeper levels are untouched. The selected row keeps its strong tone (`aria-current` excluded). The sizes follow the theme's list size, so a theme still moves them.
+
+Rejected: a theme setting per level (a new key in the theme format, for one look), and dimming sub-projects (the sidebar's names are already at the faint tone, the lowest text tone).
+
 ## Data model impact
 
 None: a new value of an existing string field. No op schema change.

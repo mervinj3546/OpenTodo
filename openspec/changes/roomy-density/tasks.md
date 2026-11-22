@@ -13,6 +13,8 @@
 
 - [ ] 2b.1 A roomy project on a phone uses the day head with the progress as its lead and no member count (verify: precisionPhone.test.tsx "with Roomy a project gets the large title"; `Screens/Phone/Shopping list, roomy`)
 
+- [ ] 2b.2 A top-level project in a roomy sidebar is larger, heavier and in the default tone (verify: density.test.tsx; the drawer of `Screens/Phone/Shopping list, roomy`)
+
 ## 3. Docs and release
 
 - [ ] 3.1 Settings copy, the Appearance docs and the translations name Roomy (verify: `make i18n-check`, `make docs-check`)

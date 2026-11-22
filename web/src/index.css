@@ -1610,6 +1610,11 @@ li[data-task-id][data-touch-hold] { background-color: color-mix(in oklab, var(--
    the fold arrow's slot is dropped in a list where no row has subtasks, so the check sits
    at the card's edge, and kept wherever one row has them, so checks still line up. */
 @media (pointer: coarse) { :root[data-density="roomy"] .row-pad > [data-row-grip] { display: none; } }
+/* The project tree in a roomy sidebar (roomy-density D6): a top-level project two steps
+   above the list size at weight 600 and one tone up from the sidebar's faint names, so
+   groups read as headings; a sub-project keeps the list size and the sidebar's tone. */
+:root[data-density="roomy"] li[role="treeitem"][aria-level="1"] [data-sidebar-item] { font-size: calc(var(--ot-text-list) + 0.125rem); font-weight: 600; }
+:root[data-density="roomy"] li[role="treeitem"][aria-level="1"] [data-sidebar-item]:not([aria-current]) { color: var(--ot-text); }
 :root[data-density="roomy"] :is(ul, ol, [role="tree"]):not(:has([data-leading-slot] > button)) .row-pad > [data-leading-slot] { display: none; }
 
 /* Full task titles (OpenSpec change full-task-titles, design D2): with the setting on,
