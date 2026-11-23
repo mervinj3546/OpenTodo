@@ -62,7 +62,7 @@ export function ProjectHeader({ project, userId, actions, layout, subtitle, phon
   const prefs = useUserPrefsRow()
   const desktop = useMediaQuery(DESKTOP_HEADER_QUERY)
   const largeTitle = !!phone && !desktop && readAppearance(prefs ?? null).density === 'roomy'
-  // The project's own progress beside its title (task-progress D4): the All projects rule, patched per write; an area never finishes, so it has none.
+  // The project's own progress beside its title (task-progress D4): the All projects rule, patched per write; an area never finishes and a reusable list is restocked, so neither has one (showsProgress).
   const liveTasks = useLiveTasks()
   const share = liveTasks && showsProgress(project) ? shareOf(projectProgressOf(liveTasks).get(project.id)) : null
   const percent = share === null ? null : percentOf(share)
