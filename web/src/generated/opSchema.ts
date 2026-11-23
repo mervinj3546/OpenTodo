@@ -842,8 +842,8 @@ export interface UserPrefsFields {
    */
   sidebar_destinations?: string
   /**
-   * Row density (ux-overhaul, design D8): "comfortable" or "compact"; an
-   * unknown or empty value reads as comfortable.
+   * Row density (ux-overhaul, design D8; roomy-density D3): "comfortable",
+   * "compact" or "roomy"; an unknown or empty value reads as comfortable.
    */
   density?: string
   /**
